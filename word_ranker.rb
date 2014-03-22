@@ -48,7 +48,7 @@ class WordRanker
     current_rank = @highest
     begin
       current_rank.words.each do |word|
-        words << word
+        words << {word:word, count:current_rank.count}
         count += 1
         return words if count == limit
       end

@@ -11,7 +11,7 @@ require './word_ranker.rb'
   cases.each do |tcase|
     name = tcase[:args].first
     begin
-      word_counts = WordRanker.rank_words(name, tcase[:args].last).flatten.join(" ")
+      word_counts = WordRanker.rank_words(name, tcase[:args].last).map{|w| w.values}.flatten.join(" ")
       result = (word_counts == tcase[:output]) ? "PASS" : "FAIL: Wrong answer: #{word_counts}"
     rescue Exception => e
       result = "FAIL: Error: #{e.inspect}"
