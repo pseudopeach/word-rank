@@ -1,13 +1,25 @@
 require './word_frequency.rb'
 
 class WordRanker
+  attr_accessor :min_size
   
   def initialize
     @index = {}
     @highest = @lowest = WordFrequency.new
+    @min_size = 1
+  end
+  
+  def self.rank_words(text, n, min_size=1)
+    ranker = WordRanker.new
+    ranker.min_size = min_size
+    text.split(/\W+/).each{|w| ranker.record w}
+    ranker.top_words(n)
   end
   
   def record(word)
+    return if word.length < @min_size
+    word = word.downcase
+    
     if item = @index[word]
       new_rank = item.promote_word(word)
       @index[word] = new_rank
