@@ -1,3 +1,4 @@
+require './word_ranker.rb'
 
   cases = [
     {args:["Row, row, row your boat, gently down the stream. BOAT!", 2], output: "row 3 boat 2" },
