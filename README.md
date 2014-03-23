@@ -7,9 +7,9 @@ Yields the top m words of the input text of length n in O(n+m) time.
 
 Running demo.rb with a text file input should produce output like the following:
 
+```
 word-rank   > ruby demo.rb 12-days-christmas.txt 
 
-```
 **** Word Rankings ****
 WORD 			 FREQUENCY
 christmas     12
