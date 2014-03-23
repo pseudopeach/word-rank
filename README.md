@@ -9,6 +9,7 @@ Running demo.rb with a text file input should produce output like the following:
 
 word-rank   > ruby demo.rb 12-days-christmas.txt 
 
+```
 **** Word Rankings ****
 WORD 			 FREQUENCY
 christmas     12
@@ -31,3 +32,4 @@ laying 			  7
 swans 			  6
 swimming 		  6
 maids 			  5
+```
