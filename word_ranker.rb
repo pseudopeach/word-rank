@@ -5,7 +5,7 @@ class WordRanker
   
   def initialize
     @index = {}
-    @highest = @lowest = WordFrequency.new
+    @highest = @lowest = FrequencyBucket.new
     @min_size = 1
   end
   
@@ -16,43 +16,48 @@ class WordRanker
     ranker.top_words(n)
   end
   
+  #inserts or updates a word in the collection
   def record(word)
     return if word.length < @min_size
     word = word.downcase
     
     if item = @index[word]
-      new_rank = item.promote_word(word)
-      @index[word] = new_rank
-      @highest = new_rank if item == @highest
+      #the word is located in the bucket [item]
+      new_bucket = item.promote_word(word)
+      @index[word] = new_bucket
+      @highest = new_bucket if item == @highest
     else  
       insert(word)
     end
   end 
   
+  #inserts a word as new
   def insert(word)
     if @lowest && @lowest.count == 1
       @lowest.words.add(word)
     else
       #update list tail
-      item = WordFrequency.new(word)
+      item = FrequencyBucket.new(word)
       @lowest.lower = item
       item.higher = @lowest
       @lowest = item
     end
+    #add [word] to the bucket index
     @index[word] = @lowest
   end
   
+  #gets the top ranked words in the index, limited to [limit] words
   def top_words(limit)
     words = []
     count = 0
-    current_rank = @highest
+    current_bucket = @highest
     begin
-      current_rank.words.each do |word|
-        words << {word:word, count:current_rank.count}
+      current_bucket.words.each do |word|
+        words << {word:word, count:current_bucket.count}
         count += 1
         return words if count == limit
       end
-    end while(current_rank = current_rank.lower)
+    end while(current_bucket = current_bucket.lower)
     
     return words
   end 
