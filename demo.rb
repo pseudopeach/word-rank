@@ -6,5 +6,6 @@ puts ""
 puts "**** Word Rankings ****"
 
 puts "WORD \t\t\t FREQUENCY"
-words.each{|w| puts "#{w[:word]} \t\t\t #{w[:count]}" }
+#formats console output in proper columns
+words.each {|w| printf "%-25s %d\n" % ["#{w[:word]}", "#{w[:count]}"] }
     
